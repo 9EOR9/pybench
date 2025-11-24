@@ -26,6 +26,7 @@ def slice_memoryview():
     result = []
     for i in range(0, 10000):
         result.append(mv[:slice_size])  # this is a view, no copy
+        result[i].release()
     return result
 
 
