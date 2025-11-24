@@ -6,11 +6,12 @@ parser.add_argument("--size", type=int, default=128, help="Size value")
 
 args = parser.parse_args()
 
+slice_size = args.size  # each small chunk
+
 # Large sample buffer (16 MB)
 data = bytearray(b"x" * (16 * 1024 * 1024))
 mv = memoryview(data)
 
-slice_size = args.size  # each small chunk
 num_slices = len(data) // slice_size  # number of slices we’ll take
 
 

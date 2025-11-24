@@ -3,13 +3,12 @@ import secrets
 import timeit
 
 a = secrets.token_bytes(4)
-b = memoryview(a)
 
 
 ITERATIONS=1000000
 
 def struct_pktlen():
-    packet_length = struct.unpack('<I', a[:3] + b'\x00')[0]
+    packet_length = struct.unpack_from('<I', a[:3] + b'\x00')[0]
 
 def native_pktlen():
     packet_length = a[0] + (a[1] << 8) + (a[2] << 16)
