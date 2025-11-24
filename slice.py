@@ -9,7 +9,7 @@ args = parser.parse_args()
 slice_size = args.size  # each small chunk
 
 # Large sample buffer (16 MB)
-data = bytearray(b"x" * (16 * 1024 * 1024))
+data = bytearray(b"x" * 0xFFFFF * 0x40)
 mv = memoryview(data)
 
 num_slices = len(data) // slice_size  # number of slices we’ll take
@@ -17,15 +17,15 @@ num_slices = len(data) // slice_size  # number of slices we’ll take
 
 def slice_bytearray():
     result = []
-    for i in range(0, len(data), slice_size):
-        result.append(data[i:i+slice_size])  # this copies data
+    for i in range(0, 10000):
+        result.append(data[:slice_size])  # this is a view, no copy
     return result
 
 
 def slice_memoryview():
     result = []
-    for i in range(0, len(mv), slice_size):
-        result.append(mv[i:i+slice_size])  # this is a view, no copy
+    for i in range(0, 10000):
+        result.append(mv[:slice_size])  # this is a view, no copy
     return result
 
 
